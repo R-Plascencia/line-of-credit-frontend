@@ -6,9 +6,10 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 import { LineOfCreditService } from '../line-of-credit/line-of-credit.service';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { Withdrawal } from './withdrawal';
 
 @Injectable()
-export class WithdrawalService {
+export class WithdrawalService {  
   private userId = localStorage.getItem('id');
   private apiUrl = `http://localhost:3000/api/users/${this.userId}/credit_lines/`;
 
@@ -31,6 +32,18 @@ export class WithdrawalService {
         return true;
       })
       .catch(this.handleError);
+  }
+
+  getAllWithdrawalsByLineId(loc_id: number): Observable<Withdrawal[]> {
+    let apiRoute = this.apiUrl + loc_id + '/withdrawals'
+
+    // add authorization header with jwt token
+    let jwtToken = this.authenticationService.token;
+    let headers = new Headers({ 'Authorization': 'Bearer ' + jwtToken, 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(apiRoute, options)
+    .map((response: Response) => response.json());
   }
 
   handleError() {

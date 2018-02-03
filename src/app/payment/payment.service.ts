@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 import { LineOfCreditService } from '../line-of-credit/line-of-credit.service';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { Payment } from './payment';
 
 @Injectable()
 export class PaymentService {
@@ -17,6 +18,18 @@ export class PaymentService {
     private authenticationService: AuthenticationService,
     private http: Http
   ) { }
+
+  getAllPaymentsByLineId(loc_id: number): Observable<Payment[]> {
+    let apiRoute = this.apiUrl + loc_id + '/payments'
+
+    // add authorization header with jwt token
+    let jwtToken = this.authenticationService.token;
+    let headers = new Headers({ 'Authorization': 'Bearer ' + jwtToken, 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(apiRoute, options)
+    .map((response: Response) => response.json());
+  }
 
   makePaymentToLineById(loc_id: number, formValue: string): Observable<boolean> {
     let apiRoute = this.apiUrl + loc_id + '/payments'

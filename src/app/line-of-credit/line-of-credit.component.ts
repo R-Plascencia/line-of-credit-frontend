@@ -8,6 +8,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import { WithdrawalService } from '../withdrawals/withdrawal.service';
 import { PaymentService } from '../payment/payment.service';
+import { Withdrawal } from '../withdrawals/withdrawal';
+import { Payment } from '../payment/payment';
 
 
 @Component({
@@ -18,7 +20,10 @@ import { PaymentService } from '../payment/payment.service';
 
 export class LineOfCreditComponent implements OnInit {
   loc: LineOfCredit;
-  showSpinner = false;
+  withdrawals: Withdrawal[];
+  payments: Payment[];
+  showPaymentSpinner = false;
+  showWithdrawalSpinner = false;
   errorMsg = '';
 
   constructor(
@@ -33,11 +38,15 @@ export class LineOfCreditComponent implements OnInit {
     this.route.params
     // (+) converts string 'id' to a number
     .switchMap((params: Params) => this.lineOfCreditService.getLineOfCreditById(+params['id']))
-    .subscribe((product) => this.loc = product);
+    .subscribe((product) => {
+      this.loc = product;
+      this.getAllWithdrawals();
+      this.getAllPayments();
+    });
   }
 
   doDraw(form: NgForm) {
-    this.showSpinner = true;
+    this.showWithdrawalSpinner = true;
 
     console.log(form.value);
     this.withdrawalService.withdrawOnLineById(this.loc.id, form.value)
@@ -47,7 +56,7 @@ export class LineOfCreditComponent implements OnInit {
           location.reload();
         }
         else {
-          this.showSpinner = false;
+          this.showWithdrawalSpinner = false;
           this.errorMsg = 'Withdrawal failed.'
           console.error('Creating new withdrawal failed');
         }
@@ -55,7 +64,7 @@ export class LineOfCreditComponent implements OnInit {
   }
 
   makePayment(form: NgForm) {
-    this.showSpinner = true;
+    this.showPaymentSpinner = true;
 
     console.log(form.value);
     this.paymentService.makePaymentToLineById(this.loc.id, form.value)
@@ -65,11 +74,25 @@ export class LineOfCreditComponent implements OnInit {
           location.reload();
         }
         else {
-          this.showSpinner = false;
+          this.showPaymentSpinner = false;
           this.errorMsg = 'Payment failed';
           console.error('Making payment failed');
         }
       });
+  }
+
+  getAllWithdrawals() {
+    console.log('Getting all withdrawals for activity log...');
+
+    this.withdrawalService.getAllWithdrawalsByLineId(this.loc.id)
+      .subscribe(withdrawals => this.withdrawals = withdrawals);
+  }
+
+  getAllPayments() {
+    console.log('Getting all payments for activity log...');
+
+    this.paymentService.getAllPaymentsByLineId(this.loc.id)
+      .subscribe(payments => this.payments = payments);
   }
 
 }
