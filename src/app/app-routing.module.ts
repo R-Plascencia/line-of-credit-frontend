@@ -4,13 +4,14 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { AuthProtect } from './authentication/auth.protect';
 import { HomeComponent } from './home/home.component';
+import { LineOfCreditComponent } from './line-of-credit/line-of-credit.component';
 
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    // { path: 'user', component: UserComponent }
-    { path: 'home', component: HomeComponent }
+    { path: 'home', component: HomeComponent },
+    { path: 'line-of-credit/:id', component: LineOfCreditComponent },
 ]
 
 @NgModule({

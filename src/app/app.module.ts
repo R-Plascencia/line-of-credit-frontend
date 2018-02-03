@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { HomeComponent } from './home/home.component';
 import { LineOfCreditService } from './line-of-credit/line-of-credit.service';
+import { LineOfCreditComponent } from './line-of-credit/line-of-credit.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { LineOfCreditService } from './line-of-credit/line-of-credit.service';
     AppComponent,
     UserComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LineOfCreditComponent
   ],
   imports: [
     BrowserModule,

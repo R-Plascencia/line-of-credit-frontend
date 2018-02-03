@@ -1,0 +1,60 @@
+<br>
+<br>
+<br>
+<table width="80%">
+  <tr align="center">
+    <h4> {{ loc?.name }} </h4>
+  </tr>
+  <tr>
+    <td>
+      <h5>Balance: ${{ loc?.principal_bal }}</h5>
+    </td>
+    <td>
+      <form #newWithdrawalForm="ngForm" (ngSubmit)="withdrawFromLine(newWithdrawalForm)">
+        <div class="form-row alignt-items-center">
+          <div class="col-auto">
+            <label class="sr-only" for="WithdrawalGroup">Withdrawal</label>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+              <input type="text" class="form-control" id="withdrawal" name="withdrawal" placeholder="Amount">
+            </div>
+          </div>
+
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-2">Withdraw</button>
+          </div>
+        </div>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h5>APR: {{ loc?.apr * 100 }}%</h5>
+    </td>
+    <td>
+      <form #newPaymentForm="ngForm" (ngSubmit)="makePaymentToLine(newPaymentForm)">
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label class="sr-only" for="PaymentGroup">Payment</label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input type="text" class="form-control" id="payment" name="payment" placeholder="Amount">
+              </div>
+            </div>
+      
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary mb-2">Pay Now</button>
+            </div>
+          </div>
+        </form>
+    </td>
+  </tr>
+</table>
+
+
+
+

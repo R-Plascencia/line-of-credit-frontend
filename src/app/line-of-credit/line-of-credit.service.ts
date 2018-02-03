@@ -4,6 +4,8 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { User } from '../user/user';
+import { LineOfCredit } from './line-of-credit';
 
 @Injectable()
 export class LineOfCreditService {
@@ -33,6 +35,18 @@ export class LineOfCreditService {
         return true;
       })
       .catch(this.handleError);
+  }
+
+  getLineOfCreditById(id: number): Observable<LineOfCredit> {
+    let apiRoute = this.apiUrl + this.userId + '/credit_lines/' + id
+
+    // add authorization header with jwt token
+    let jwtToken = this.authenticationService.token;
+    let headers = new Headers({ 'Authorization': 'Bearer ' + jwtToken, 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(apiRoute, options)
+      .map((response: Response) => response.json());
   }
 
   handleError() {
