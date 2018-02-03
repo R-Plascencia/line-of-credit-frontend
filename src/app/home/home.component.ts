@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { User } from '../user/user';
+import { NgForm } from '@angular/forms';
+import { LineOfCreditService } from '../line-of-credit/line-of-credit.service';
 
 @Component({
   selector: 'app-home',
@@ -9,8 +12,13 @@ import { User } from '../user/user';
 })
 export class HomeComponent implements OnInit {
   user: User;
+  showSpinner = false;
+  errorMsg = '';
  
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private lineOfCreditService: LineOfCreditService
+  ) { }
 
   ngOnInit() {
     this.loadUser();
@@ -24,4 +32,19 @@ export class HomeComponent implements OnInit {
       .subscribe(resUser => this.user = resUser);
   }
 
+  createLineOfCredit(form: NgForm) {
+    this.showSpinner = true;
+    this.lineOfCreditService.createNewLineOfCredit(form.value)
+      .subscribe(result => {
+        if (result === true) {
+          console.log('Created new LOC!')
+          location.reload();
+        }
+        else {
+          this.showSpinner = false;
+          this.errorMsg = 'Login failed. Please check email or password and try again.'
+          console.error('Creating new LoC failed');
+        }
+      });
+  }
 }

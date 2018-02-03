@@ -22,22 +22,12 @@
 
 <div>
   <h5>Get a new line of credit</h5>
-  <form>
+  <form #newLocForm="ngForm" (ngSubmit)="createLineOfCredit(newLocForm)">
     <div class="form-row">
 
-      <div class="col-md-3 mb-2">
+      <div class="col-md-6 mb-4">
         <label for="validationDefault02">Name (e.g. "New Car!")</label>
-        <input type="text" class="form-control" id="validationDefault02" placeholder="Name" required>
-      </div>
-
-      <div class="col-md-3 mb-2">
-        <label for="validationCreditAmount">Amount</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupPrepend2">$</span>
-          </div>
-          <input type="text" class="form-control" id="validationCreditAmount" placeholder="Amount" aria-describedby="inputGroupPrepend2" required>
-        </div>   
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required ngModel>
       </div>
 
     </div>
@@ -46,7 +36,7 @@
 
       <div class="col-md-3 mb-2">
         <label for="validationDefault03">Credit Limit</label>
-        <input type="text" class="form-control" id="validationDefault03" placeholder="$500" required>
+        <input type="text" class="form-control" id="credit_limit" name="credit_limit" placeholder="$500" required ngModel>
       </div>
 
       <div class="col-md-3 mb-2">
@@ -55,7 +45,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroupPrepend2">%</span>
           </div>
-          <input type="text" class="form-control" id="validationCreditAmount" placeholder="APR" aria-describedby="inputGroupPrepend2" required>
+          <input type="text" class="form-control" id="apr" name="apr" placeholder="APR" aria-describedby="inputGroupPrepend2" required ngModel>
         </div>  
       </div>
 

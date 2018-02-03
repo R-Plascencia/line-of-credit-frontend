@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { HomeComponent } from './home/home.component';
+import { LineOfCreditService } from './line-of-credit/line-of-credit.service';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { HomeComponent } from './home/home.component';
   ],
   providers: [
     UserService,
-    AuthenticationService
+    AuthenticationService,
+    LineOfCreditService
   ],
   bootstrap: [AppComponent]
 })
