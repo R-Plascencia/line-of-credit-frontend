@@ -1,0 +1,66 @@
+<div>
+  User: {{ user?.first_name }} {{ user?.last_name }}
+  <br>
+  Email Address: {{ user?.email }}
+  <br>
+</div>
+
+<br>
+
+<div>
+  Credit Lines:
+  <ul>
+    <li *ngFor="let loc of user?.credit_lines">
+      <a href="#"> {{ loc.name }} </a> - ${{ loc.principal_bal }}
+      <br>
+      Opened on {{ loc.created_at | date: 'MM-dd-yyyy' }}
+    </li>
+  </ul>
+</div>
+
+<br><br>
+
+<div>
+  <h5>Get a new line of credit</h5>
+  <form>
+    <div class="form-row">
+
+      <div class="col-md-3 mb-2">
+        <label for="validationDefault02">Name (e.g. "New Car!")</label>
+        <input type="text" class="form-control" id="validationDefault02" placeholder="Name" required>
+      </div>
+
+      <div class="col-md-3 mb-2">
+        <label for="validationCreditAmount">Amount</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend2">$</span>
+          </div>
+          <input type="text" class="form-control" id="validationCreditAmount" placeholder="Amount" aria-describedby="inputGroupPrepend2" required>
+        </div>   
+      </div>
+
+    </div>
+
+    <div class="form-row">
+
+      <div class="col-md-3 mb-2">
+        <label for="validationDefault03">Credit Limit</label>
+        <input type="text" class="form-control" id="validationDefault03" placeholder="$500" required>
+      </div>
+
+      <div class="col-md-3 mb-2">
+        <label for="validationAPR">APR</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend2">%</span>
+          </div>
+          <input type="text" class="form-control" id="validationCreditAmount" placeholder="APR" aria-describedby="inputGroupPrepend2" required>
+        </div>  
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>

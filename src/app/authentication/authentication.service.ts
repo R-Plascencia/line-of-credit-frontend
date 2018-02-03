@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 
@@ -31,9 +31,10 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string): Observable<boolean> {
-
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
         // Compiler doesn't like the {headers...} here, but it doesn't work without it
-        return this.http.post(this.authUrl, JSON.stringify({auth: {email:email, password:password} }), {headers:{'Content-Type': 'application/json'}).map( (res: Response) => {
+        return this.http.post(this.authUrl, JSON.stringify({auth: {email:email, password:password} }), options).map( (res: Response) => {
             // Success!
             let token = res.json() && res.json().jwt;
             var id = this.getTokenPayload(token).sub.toString();

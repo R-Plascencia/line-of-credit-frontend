@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.user.email, this.user.password)
       .subscribe(result => {
         if (result === true) {
-          this.router.navigate(['user']);
+          this.router.navigate(['home']);
         }
         else {
           this.showSpinner = false;
