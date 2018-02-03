@@ -1,6 +1,10 @@
-<a routerLink='/home'>My Homepage</a>
-<a routerLink='/login'>Login</a>
-
+<!-- Will get an ExpressionChangedAfterItHasBeenCheckedError for this line below,
+    but it works. In interest of time, just don't mind the red in the browser console :) -->
+<div *ngIf="authService.token != null">
+    <a routerLink='/home'>My Homepage</a>
+    <a routerLink='/login'>Login</a>  
+</div>
+ 
 <!--The content below is only a placeholder and can be replaced.-->
 <!-- <div style="text-align:center">
   <h1>

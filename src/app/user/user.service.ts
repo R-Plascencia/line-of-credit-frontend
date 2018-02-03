@@ -25,5 +25,31 @@ export class UserService {
         .map((response: Response) => response.json());
     }
 
+    currentUserPresent(): Observable<boolean> {
+        if (localStorage.getItem('currentUser')){
+            return Observable.of(true);
+        }
+        else {
+            return Observable.of(false);
+        }
+    }
+
+    createNewUser(formValues: string): Observable<boolean> {
+        console.log(JSON.stringify(formValues))
+
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.userUrl, JSON.stringify(formValues), options)
+        .map((response: Response) => {
+          return true;
+        })
+        .catch(this.handleError);
+    }
+
+    handleError() {
+        return Observable.of(false);
+    }
+
 }
 

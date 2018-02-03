@@ -1,27 +1,82 @@
-<p>
-  login works!
-</p>
-<div class="col-md-6 col-md-offset-3">
-    <div class="alert alert-info">
-        email: test<br />
-        Password: test
-    </div>
-    <h2>Login</h2>
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required />
-            <div *ngIf="f.submitted && !email.valid" class="help-block">email is required</div>
+
+<br>
+<div class="text-center">
+    <img class="mb-4" src="assets/img/money-bag.svg" alt="Awesome icon :)" width="100" height="100">
+
+    <form *ngIf="!showSignUpForm" class="form-signin" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+        <label for="email" class="sr-only">Email address</label>
+        <!-- <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus> -->
+        <input type="text" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" placeholder="Email address" required />
+
+        <label for="password" class="sr-only">Password</label>
+        <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
+        <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" placeholder="Password" required />
+
+        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger" role="alert">
+            Password is required
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required />
-            <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger" role="alert">
+            Email is required
         </div>
-        <div class="form-group">
-            <button [disabled]="showSpinner" class="btn btn-primary">Login</button>
+        <div *ngIf="errorMsg" class="alert alert-danger">
+            {{errorMsg}}
+        </div>
+        <br>
+
+        <button [disabled]="showSpinner" class="btn btn-lg btn-primary btn-block" type="submit">
+            Sign in 
             <img *ngIf="showSpinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-        </div>
-        <div *ngIf="errorMsg" class="alert alert-danger">{{errorMsg}}</div>
+        </button>
     </form>
+
+    <form *ngIf="showSignUpForm" class="form-signin" name="signupform" (ngSubmit)="sf.form.valid && createUser(sf)" #sf="ngForm" novalidate>
+        <h1 class="h3 mb-3 font-weight-normal">Sign up!</h1>
+
+        <label for="email" class="sr-only">Email address</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" placeholder="Email address" required />
+
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" placeholder="Password" required />
+
+        <label for="firstname" class="sr-only">First Name</label>
+        <input type="text" class="form-control" name="first_name" [(ngModel)]="user.first_name" #first_name="ngModel" placeholder="First Name" required />
+
+        <label for="lastname" class="sr-only">Last Name</label>
+        <input type="text" class="form-control" name="last_name" [(ngModel)]="user.last_name" #last_name="ngModel" placeholder="Last Name" required />
+
+        <div *ngIf="sf.submitted && !password.valid" class="alert alert-danger" role="alert">
+            Password is required
+        </div>
+        <div *ngIf="sf.submitted && !email.valid" class="alert alert-danger" role="alert">
+            Email is required
+        </div>
+        <div *ngIf="sf.submitted && !first_name.valid" class="alert alert-danger" role="alert">
+            First name is required
+        </div>
+        <div *ngIf="errorMsg" class="alert alert-danger">
+            {{errorMsg}}
+        </div>
+        <br>
+
+        <button [disabled]="showSpinner" class="btn btn-lg btn-primary btn-block" type="submit">
+            Sign up 
+            <img *ngIf="showSpinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </button>
+    </form>
+
+    <br>
+    <div *ngIf="!showSignUpForm">
+        New? 
+        <a href="javascript:void(0)" (click)="toggleSignUpForm()">Sign up!</a>
+    </div>
+    <div *ngIf="showSignUpForm">
+        Already have an account?
+        <a href="javascript:void(0)" (click)="toggleSignUpForm()">Back to sign in!</a>
+    </div>
+
+    <p class="mt-5 mb-3 text-muted">
+        Raul Plascencia | Line of Credit API frontend
+    </p>
 </div>
