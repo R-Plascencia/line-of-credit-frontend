@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserListComponent } from './user/user-list.component';
+import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { AuthProtect } from './authentication/auth.protect';
 
@@ -8,7 +8,7 @@ import { AuthProtect } from './authentication/auth.protect';
 const routes: Routes = [
     { path: '', redirectTo: '', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    { path: 'users', component: UserListComponent }
+    { path: 'user', component: UserComponent }
 ]
 
 @NgModule({

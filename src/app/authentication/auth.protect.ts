@@ -9,7 +9,7 @@ export class AuthProtect implements CanActivate {
 
     // Check if logged in and can access page or not
     canActivate() {
-        if (localStorage.getItem('currentUser')) {
+        if (localStorage.getItem('currentUser') && localStorage.getItem('id')) {
             return true;
         } 
         else {
