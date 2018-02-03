@@ -10,10 +10,11 @@ export class AuthProtect implements CanActivate {
     // Check if logged in and can access page or not
     canActivate() {
         if (localStorage.getItem('currentUser') && localStorage.getItem('id')) {
+            this.router.navigate(['home']);
             return true;
         } 
         else {
-            this.router.navigate(['/login']);
+            this.router.navigate(['login']);
             return false;
         }
     }

@@ -8,10 +8,10 @@ import { LineOfCreditComponent } from './line-of-credit/line-of-credit.component
 
 
 const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '', component: HomeComponent, canActivate: [AuthProtect] },
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: HomeComponent },
-    { path: 'line-of-credit/:id', component: LineOfCreditComponent },
+    { path: 'home', component: HomeComponent, canActivate: [AuthProtect] },
+    { path: 'line-of-credit/:id', component: LineOfCreditComponent, canActivate: [AuthProtect] },
 ]
 
 @NgModule({
