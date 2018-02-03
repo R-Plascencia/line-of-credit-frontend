@@ -37,7 +37,7 @@
       <h5>APR: {{ loc?.apr * 100 }}%</h5>
     </td>
     <td>
-      <form #newPaymentForm="ngForm" (ngSubmit)="makePaymentToLine(newPaymentForm)">
+      <form #payForm="ngForm" (ngSubmit)="makePayment(payForm)">
           <div class="form-row align-items-center">
             <div class="col-auto">
               <label class="sr-only" for="PaymentGroup">Payment</label>
@@ -45,7 +45,7 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text">$</div>
                 </div>
-                <input type="text" class="form-control" id="payment" name="payment" placeholder="Amount" required NgModel>
+                <input type="text" class="form-control" id="payment" name="payment" placeholder="Amount" required ngModel>
               </div>
             </div>
       

@@ -7,6 +7,7 @@ import { LineOfCreditService } from './line-of-credit.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import { WithdrawalService } from '../withdrawals/withdrawal.service';
+import { PaymentService } from '../payment/payment.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class LineOfCreditComponent implements OnInit {
   constructor(
     private lineOfCreditService: LineOfCreditService,
     private withdrawalService: WithdrawalService,
+    private paymentService: PaymentService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -48,6 +50,24 @@ export class LineOfCreditComponent implements OnInit {
           this.showSpinner = false;
           this.errorMsg = 'Withdrawal failed.'
           console.error('Creating new withdrawal failed');
+        }
+      });
+  }
+
+  makePayment(form: NgForm) {
+    this.showSpinner = true;
+
+    console.log(form.value);
+    this.paymentService.makePaymentToLineById(this.loc.id, form.value)
+      .subscribe(result => {
+        if (result === true){
+          console.log('Payment Success!');
+          location.reload();
+        }
+        else {
+          this.showSpinner = false;
+          this.errorMsg = 'Payment failed';
+          console.error('Making payment failed');
         }
       });
   }

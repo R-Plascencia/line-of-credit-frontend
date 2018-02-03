@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { LineOfCreditService } from './line-of-credit/line-of-credit.service';
 import { LineOfCreditComponent } from './line-of-credit/line-of-credit.component';
 import { WithdrawalService } from './withdrawals/withdrawal.service';
+import { PaymentService } from './payment/payment.service';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { WithdrawalService } from './withdrawals/withdrawal.service';
     AuthenticationService,
     LineOfCreditService,
     WithdrawalService,
+    PaymentService
   ],
   bootstrap: [AppComponent]
 })
