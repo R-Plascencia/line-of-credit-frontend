@@ -37,6 +37,21 @@ export class LineOfCreditService {
       .catch(this.handleError);
   }
 
+  deleteLineOfCredit(id: number): Observable<boolean> {
+    let apiRoute = this.apiUrl + this.userId + '/credit_lines/' + id;
+
+    // add authorization header with jwt token
+    let jwtToken = this.authenticationService.token;
+    let headers = new Headers({ 'Authorization': 'Bearer ' + jwtToken, 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.delete(apiRoute, options)
+      .map((response: Response) => {
+        return true;
+      })
+      .catch(this.handleError);
+  }
+
   getLineOfCreditById(id: number): Observable<LineOfCredit> {
     let apiRoute = this.apiUrl + this.userId + '/credit_lines/' + id
 

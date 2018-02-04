@@ -67,6 +67,26 @@ export class LineOfCreditComponent implements OnInit {
       });
   }
 
+  deleteCreditLine(id: number) {
+    if (this.loc.principal_bal > 0) {
+      console.log('You cant delete this!');
+      this.errorMsg = 'You cannot delete a line of credit with an outstanding balance.'
+    }
+    else {
+      this.lineOfCreditService.deleteLineOfCredit(id)
+      .subscribe(result => {
+        if (result === true) {
+          console.log('Credit Line deleted!');
+          this.router.navigate(['home']);
+        }
+        else {
+          this.errorMsg = 'The deletion failed, try again later!'
+          console.error('Deleted LoC failed');
+        }
+      });
+    }
+  }
+
   makePayment(form: NgForm) {
     this.showPaymentSpinner = true;
 
@@ -97,6 +117,10 @@ export class LineOfCreditComponent implements OnInit {
 
     this.paymentService.getAllPaymentsByLineId(this.loc.id)
       .subscribe(payments => this.payments = payments);
+  }
+
+  resetErrors() {
+    this.errorMsg = '';
   }
 
 }
