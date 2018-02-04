@@ -12,6 +12,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'home', component: HomeComponent, canActivate: [AuthProtect] },
     { path: 'line-of-credit/:id', component: LineOfCreditComponent, canActivate: [AuthProtect] },
+    { path: '**', redirectTo: 'home' }
 ]
 
 @NgModule({
