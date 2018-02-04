@@ -8,7 +8,7 @@ import { LineOfCreditComponent } from './line-of-credit/line-of-credit.component
 
 
 const routes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthProtect] },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'home', component: HomeComponent, canActivate: [AuthProtect] },
     { path: 'line-of-credit/:id', component: LineOfCreditComponent, canActivate: [AuthProtect] },

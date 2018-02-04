@@ -1,57 +1,81 @@
-<div>
-  User: {{ user?.first_name }} {{ user?.last_name }}
-  <br>
-  Email Address: {{ user?.email }}
-  <br>
+<br>
+
+<div class="jumbotron">
+  <div class="container">
+
+    <h1 class="display-4">
+      Hi, {{ user?.first_name }}!
+    </h1>
+    <p class="lead">
+      Line of credit holder since {{ user?.created_at | date }}
+    </p>
+      
+  </div>
 </div>
 
 <br>
 
-<div>
-  Credit Lines:
-  <ul>
-    <li *ngFor="let loc of user?.credit_lines">
-      <a routerLink="/line-of-credit/{{loc.id}}"> {{ loc.name }} </a> - ${{ loc.principal_bal }}
-      <br>
-      Opened on {{ loc.created_at | date: 'MM-dd-yyyy' }}
-    </li>
-  </ul>
-</div>
-
-<br><br>
-
-<div>
-  <h5>Get a new line of credit</h5>
-  <form #newLocForm="ngForm" (ngSubmit)="createLineOfCredit(newLocForm)">
-    <div class="form-row">
-
-      <div class="col-md-6 mb-4">
-        <label for="validationDefault02">Name (e.g. "New Car!")</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required ngModel>
+<table width="100%">
+  <tr>
+    <td style="padding-right:15%;">
+      <div class="media" *ngFor="let loc of user?.credit_lines">
+        <img class="mr-3" src="/assets/img/credit-card2.png" alt="Line of Credit" height="65" width="65">
+        <div class="media-body">
+          <h5 class="mt-0">
+            <a routerLink="/line-of-credit/{{loc.id}}"> 
+              {{ loc.name }} 
+            </a> - ${{ loc.principal_bal }}
+          </h5>
+          Opened on {{ loc.created_at | date: 'MM-dd-yyyy' }}
+        </div>
+        <br><br>
       </div>
+    </td>
 
-    </div>
+    <td>  
+      <div style="border-left: solid 1px rgb(216, 213, 213); height:250px;padding: 10px;"></div>
+    </td>
 
-    <div class="form-row">
-
-      <div class="col-md-3 mb-2">
-        <label for="validationDefault03">Credit Limit</label>
-        <input type="text" class="form-control" id="credit_limit" name="credit_limit" placeholder="$500" required ngModel>
-      </div>
-
-      <div class="col-md-3 mb-2">
-        <label for="validationAPR">APR</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupPrepend2">%</span>
+    <td style="padding-left: 15%;">
+      <div>
+        <h5>Get a new line of credit</h5>
+        <form #newLocForm="ngForm" (ngSubmit)="createLineOfCredit(newLocForm)">
+          <div class="form-row">
+      
+            <div class="col-md-6 mb-4">
+              <label for="validationDefault02">Name (e.g. "New Car!")</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Name" required ngModel>
+            </div>
+      
           </div>
-          <input type="text" class="form-control" id="apr" name="apr" placeholder="APR" aria-describedby="inputGroupPrepend2" required ngModel>
-        </div>  
+      
+          <div class="form-row">
+      
+            <div class="col-md-3 mb-2">
+              <label for="validationDefault03">Credit Limit</label>
+              <input type="text" class="form-control" id="credit_limit" name="credit_limit" placeholder="$500" required ngModel>
+            </div>
+      
+            <div class="col-md-3 mb-2">
+              <label for="validationAPR">APR</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupPrepend2">%</span>
+                </div>
+                <input type="text" class="form-control" id="apr" name="apr" placeholder="APR" aria-describedby="inputGroupPrepend2" required ngModel>
+              </div>  
+            </div>
+      
+          </div>
+      
+          <button [disabled]="showSpinner" class="btn btn-primary" type="submit">
+            Submit
+            <img *ngIf="showSpinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </button>
+        </form>
       </div>
-
-    </div>
-
-    <button [disabled]="showSpinner" class="btn btn-primary" type="submit">Submit</button>
-    <img *ngIf="showSpinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-  </form>
-</div>
+    </td>
+    
+  </tr>
+  
+</table>
