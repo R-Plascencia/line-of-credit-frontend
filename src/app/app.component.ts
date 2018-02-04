@@ -19,12 +19,10 @@ export class AppComponent {
   ){}
 
   hideNav() {
-    console.log('getting called');
     if (this.router.url === '/page-401') {
       console.log('This is the 401 page');
       return true;
     } else {
-      console.log('not 401');
       return false;
     }
   }
