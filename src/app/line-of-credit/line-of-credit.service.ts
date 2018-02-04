@@ -46,7 +46,8 @@ export class LineOfCreditService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(apiRoute, options)
-      .map((response: Response) => response.json());
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
   }
 
   handleError() {

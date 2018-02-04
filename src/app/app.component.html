@@ -13,7 +13,7 @@
 <div class="container">
 
 
-  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary rounded box-shadow" *ngIf="authService.token != null">
+  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary rounded box-shadow" *ngIf="!hideNav() && authService.token != null">
     <a class="navbar-brand" href="#">
       <img src="/assets/img/money-bag.svg" width="50" height="50" alt="">
     </a>

@@ -15,6 +15,7 @@ import { LineOfCreditComponent } from './line-of-credit/line-of-credit.component
 import { WithdrawalService } from './withdrawals/withdrawal.service';
 import { PaymentService } from './payment/payment.service';
 import { AuthProtect } from './authentication/auth.protect';
+import { Page401Component } from './page-401/page-401.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AuthProtect } from './authentication/auth.protect';
     UserComponent,
     LoginComponent,
     HomeComponent,
-    LineOfCreditComponent
+    LineOfCreditComponent,
+    Page401Component
   ],
   imports: [
     BrowserModule,

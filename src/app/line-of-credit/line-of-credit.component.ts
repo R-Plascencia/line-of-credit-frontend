@@ -39,6 +39,10 @@ export class LineOfCreditComponent implements OnInit {
     // (+) converts string 'id' to a number
     .switchMap((params: Params) => this.lineOfCreditService.getLineOfCreditById(+params['id']))
     .subscribe((product) => {
+      if (product === false) {
+        this.router.navigate(['page-401']);
+      }
+
       this.loc = product;
       this.getAllWithdrawals();
       this.getAllPayments();
