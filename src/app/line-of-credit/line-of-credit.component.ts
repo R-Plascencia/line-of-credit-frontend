@@ -69,7 +69,6 @@ export class LineOfCreditComponent implements OnInit {
 
   deleteCreditLine(id: number) {
     if (this.loc.principal_bal > 0) {
-      console.log('You cant delete this!');
       this.errorMsg = 'You cannot delete a line of credit with an outstanding balance.'
     }
     else {

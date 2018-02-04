@@ -7,7 +7,6 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./page-401.component.css']
 })
 export class Page401Component implements OnInit {
-  unauthPage: boolean;
 
   constructor(
     private router: Router
