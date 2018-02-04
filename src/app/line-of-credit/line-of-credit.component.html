@@ -1,15 +1,21 @@
-<br>
+<a routerLink="/home">
+  <i class="fas fa-chevron-left"></i>
+  Back Home
+</a>
 <br>
 <br>
 <div class="d-flex justify-content-center">
-  <h2> {{ loc?.name }} </h2>
+  <h1 class="display-4"> {{ loc?.name }} </h1>
   
 </div>
 <br><br>
 <div class="d-flex justify-content-center">
   <div>
-      <h1 class="display-1" style="padding-right:75px">
+      <h1 class="display-1" style="padding-right:75px" *ngIf="loc?.principal_bal >= 0">
         ${{ loc?.principal_bal | number : '1.2-2' }}
+      </h1>
+      <h1 class="display-1" style="padding-right:75px" *ngIf="loc?.principal_bal < 0">
+        -${{ loc?.principal_bal * -1 | number : '1.2-2' }} CR
       </h1>
       <br>
       <span style="padding-left: 140px">
@@ -34,7 +40,7 @@
 <div class="d-flex justify-content-center">
   <table width="60%">
     <tr>
-      <td>
+      <td style="padding-right:25px;">
         <form #drawForm="ngForm" (ngSubmit)="doDraw(drawForm)">
           <div class="form-row alignt-items-center">
             <div class="col-auto">
@@ -47,12 +53,12 @@
               </div>
             </div>
 
-            <div class="col-auto">
+            <!-- <div class="col-auto"> -->
               <button [disabled]="showWithdrawalSpinner" class="btn btn-primary mb-2" type="submit">Withdraw</button>
               <img *ngIf="showSpinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
     
               <!-- <button type="submit" class="btn btn-primary mb-2">Withdraw</button> -->
-            </div>
+            <!-- </div> -->
           </div>
         </form>
       </td>
@@ -71,9 +77,10 @@
               </div>
         
               <div class="col-auto">
-                <button [disabled]="showPaymentSpinner" class="btn btn-primary mb-2" type="submit">Pay Now</button>
-                <img *ngIf="showSpinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-    
+                <button [disabled]="showPaymentSpinner" class="btn btn-primary mb-2" type="submit">
+                  Pay Now
+                  <img *ngIf="showPaymentSpinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                </button>    
                 <!-- <button type="submit" class="btn btn-primary mb-2">Pay Now</button> -->
               </div>
             </div>
@@ -105,13 +112,13 @@
       <tr *ngFor="let w of withdrawals">
         <th scope="row"> {{ w?.created_at | date }} at {{ w?.created_at | date:'shortTime' }} </th>
         <td> Withdrawal </td>
-        <td> ${{ w?.amount }} </td>
+        <td> ${{ w?.amount | number : '1.2-2'  }} </td>
         <td> ${{ w?.new_bal | number : '1.2-2' }} </td>
       </tr>
       <tr *ngFor="let p of payments">
         <th scope="row"> {{ p?.created_at | date }} at {{ p?.created_at | date:'shortTime' }}  </th>
         <td> Payment </td>
-        <td> ${{ p?.amount }} </td>
+        <td> ${{ p?.amount | number : '1.2-2' }} </td>
         <td> ${{ p?.new_bal | number : '1.2-2' }} </td>
       </tr>
     </tbody>
