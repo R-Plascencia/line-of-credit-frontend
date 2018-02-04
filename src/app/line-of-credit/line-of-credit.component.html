@@ -20,10 +20,10 @@
 </div>
 
 <br>
-<div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+<div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="delErrorMsg">
   <strong>Uh oh!</strong> 
-  {{ errorMsg }}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetErrors()">
+  {{ delErrorMsg }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetDelErrors()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -43,10 +43,10 @@
       <h1 class="display-1" style="padding-right:75px" *ngIf="loc?.principal_bal < 0">
         -${{ loc?.principal_bal * -1 | number : '1.2-2' }} CR
       </h1>
-      <br>
-      <span style="padding-left: 140px">
-        Balance
+      <span style="padding-left: 120px">
+        / ${{ loc?.credit_limit }}
       </span>
+      <br>
   </div>
 <!-- </div> -->
 <!-- <div class="d-flex justify-content-end"> -->
@@ -54,14 +54,15 @@
     <h1 class="display-1"  style="padding-left: 75px">
       {{ loc?.apr * 100 }}%
     </h1>
-    <br>
     <span style="padding-left: 140px">
       APR
     </span>
   </div>
 </div>
 
-<br><br><br>
+<br><br>
+<br>
+
 
 <div class="d-flex justify-content-center">
   <table width="60%">
@@ -118,6 +119,15 @@
   </table>
 </div>
 
+<div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+  <strong>Uh oh!</strong> 
+  {{ errorMsg }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetErrorMsg()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
 <br>
 <hr width="70%">
 
@@ -151,6 +161,7 @@
       </tr>
     </tbody>
 </table>
+
 <!-- <ul>
   <li *ngFor="let w of withdrawals">
     {{ w?.created_at | date: 'MM-dd-yyyy' }} : ${{ w?.amount }} : {{ w?.new_bal | number : '1.2-2' }}

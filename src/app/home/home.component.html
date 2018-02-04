@@ -24,9 +24,12 @@
           <h5 class="mt-0">
             <a routerLink="/line-of-credit/{{loc.id}}"> 
               {{ loc.name }} 
-            </a> : ${{ loc.principal_bal }}
+            </a> : 
             <span *ngIf="loc.principal_bal < 0">
-              CR
+              -${{ loc.principal_bal * -1 }} CR
+            </span>
+            <span *ngIf="loc.principal_bal >= 0">
+              ${{ loc.principal_bal }}
             </span>
           </h5>
           Opened on {{ loc.created_at | date: 'MM-dd-yyyy' }}
@@ -56,7 +59,7 @@
       
             <div class="col-md-3 mb-2">
               <label for="validationDefault03">Credit Limit</label>
-              <input type="number" class="form-control" id="credit_limit" name="credit_limit" placeholder="$500" required ngModel>
+              <input type="number" min="0" class="form-control" id="credit_limit" name="credit_limit" placeholder="$500" required ngModel>
             </div>
       
             <div class="col-md-3 mb-2">
@@ -65,15 +68,21 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroupPrepend2">%</span>
                 </div>
-                <input type="number" class="form-control" id="apr" name="apr" placeholder="APR" aria-describedby="inputGroupPrepend2" required ngModel>
+                <input type="number" min="0" class="form-control" id="apr" name="apr" placeholder="APR" aria-describedby="inputGroupPrepend2" required ngModel>
               </div>  
             </div>
       
           </div>
 
           <div *ngIf="newLocForm.submitted && !newLocForm.valid" class="alert alert-danger" role="alert">
-              Please fill out all fields in the form above
+              Please make sure all fields are filled out and contain correct values
           </div>
+          <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+            {{ errorMsg }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetErrorMsg()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div> -->
       
           <button [disabled]="showSpinner" class="btn btn-primary" type="submit">
             Submit

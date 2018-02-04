@@ -33,18 +33,27 @@ export class HomeComponent implements OnInit {
   }
 
   createLineOfCredit(form: NgForm) {
-    this.showSpinner = true;
-    this.lineOfCreditService.createNewLineOfCredit(form.value)
-      .subscribe(result => {
-        if (result === true) {
-          console.log('Created new LOC!')
-          location.reload();
-        }
-        else {
-          this.showSpinner = false;
-          this.errorMsg = 'Login failed. Please check email or password and try again.'
-          console.error('Creating new LoC failed');
-        }
-      });
+    if (form.value.apr < 0 || form.value.credit_limit < 0) {
+      this.errorMsg = 'Number values cannot be less than 0.'
+    }
+    else {
+      this.showSpinner = true;
+      this.lineOfCreditService.createNewLineOfCredit(form.value)
+        .subscribe(result => {
+          if (result === true) {
+            console.log('Created new LOC!')
+            location.reload();
+          }
+          else {
+            this.showSpinner = false;
+            this.errorMsg = 'Login failed. Please check email or password and try again.'
+            console.error('Creating new LoC failed');
+          }
+        });
+    }
+  }
+
+  resetErrorMsg() {
+    this.errorMsg = '';
   }
 }

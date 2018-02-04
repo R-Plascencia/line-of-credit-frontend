@@ -24,6 +24,7 @@ export class LineOfCreditComponent implements OnInit {
   payments: Payment[];
   showPaymentSpinner = false;
   showWithdrawalSpinner = false;
+  delErrorMsg = '';
   errorMsg = '';
 
   constructor(
@@ -52,8 +53,14 @@ export class LineOfCreditComponent implements OnInit {
   doDraw(form: NgForm) {
     this.showWithdrawalSpinner = true;
 
-    console.log(form.value);
-    this.withdrawalService.withdrawOnLineById(this.loc.id, form.value)
+    let total_bal = this.loc.principal_bal + form.value.drawamt;
+    if (total_bal > this.loc.credit_limit) {
+      this.showWithdrawalSpinner = false;
+      this.errorMsg = `You cannot withdraw past your credit limit of $${this.loc.credit_limit}.`
+      console.error('Overdrawn!');
+    }
+    else {
+      this.withdrawalService.withdrawOnLineById(this.loc.id, form.value)
       .subscribe(result => {
         if (result === true){
           console.log('Withdrawal Success!');
@@ -65,11 +72,12 @@ export class LineOfCreditComponent implements OnInit {
           console.error('Creating new withdrawal failed');
         }
       });
+    }
   }
 
   deleteCreditLine(id: number) {
     if (this.loc.principal_bal > 0) {
-      this.errorMsg = 'You cannot delete a line of credit with an outstanding balance.'
+      this.delErrorMsg = 'You cannot delete a line of credit with an outstanding balance.'
     }
     else {
       this.lineOfCreditService.deleteLineOfCredit(id)
@@ -79,7 +87,7 @@ export class LineOfCreditComponent implements OnInit {
           this.router.navigate(['home']);
         }
         else {
-          this.errorMsg = 'The deletion failed, try again later!'
+          this.delErrorMsg = 'The deletion failed, try again later!'
           console.error('Deleted LoC failed');
         }
       });
@@ -118,8 +126,11 @@ export class LineOfCreditComponent implements OnInit {
       .subscribe(payments => this.payments = payments);
   }
 
-  resetErrors() {
-    this.errorMsg = '';
+  resetDelErrors() {
+    this.delErrorMsg = '';
   }
 
+  resetErrorMsg() {
+    this.errorMsg = '';
+  }
 }
